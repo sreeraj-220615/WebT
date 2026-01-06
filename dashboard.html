@@ -6,13 +6,77 @@
 <title>Dashboard | Job Portal</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script> 
+
+<style>
+/* ===== RESET & BASE ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+body { background: #f4f6f8; color: #333; }
+
+/* ===== NAVBAR ===== */
+.dash-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 10; }
+.dash-header .logo { font-weight: 700; color: #2196f3; font-size: 24px; }
+.dash-header nav a { margin-left: 20px; text-decoration: none; color: #555; font-weight: 500; transition: color 0.2s; }
+.dash-header nav a.active, .dash-header nav a:hover { color: #2196f3; }
+.dash-right { display: flex; align-items: center; gap: 15px; }
+.search-bar { position: relative; }
+.search-bar input { padding: 6px 30px 6px 10px; border-radius: 20px; border: 1px solid #ccc; outline: none; }
+.search-bar span { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+
+/* ===== LAYOUT ===== */
+.dashboard-layout { display: flex; padding: 20px 30px; gap: 20px; }
+.sidebar { width: 280px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+.dash-content { flex: 1; }
+
+/* ===== PROFILE CARD ===== */
+.profile-card { text-align: center; }
+.avatar-circle { width: 80px; height: 80px; background: #2196f3; color: #fff; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 28px; margin: 0 auto 10px; font-weight: bold; }
+.profile-card h3 { font-size: 20px; margin-bottom: 5px; }
+.profile-card p { font-size: 14px; color: #666; margin-bottom: 5px; }
+.progress-ring { margin: 15px 0; font-size: 14px; color: #555; }
+
+/* ===== BUTTONS ===== */
+.btn-primary, .btn-logout, .banner button, #gotoJobs { padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; transition: all 0.2s ease; }
+.btn-primary { background: #2196f3; color: #fff; width: 100%; }
+.btn-primary:hover { background: #1976d2; }
+.btn-logout { background: #f44336; color: #fff; }
+.btn-logout:hover { background: #d32f2f; }
+.banner button { background: #ff9800; color: #fff; }
+.banner button:hover { background: #fb8c00; }
+#gotoJobs { background: #4caf50; color: #fff; margin-top: 20px; }
+#gotoJobs:hover { background: #388e3c; }
+
+/* ===== BANNER ===== */
+.banner { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(90deg, #2196f3, #4caf50); color: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; flex-wrap: wrap; gap: 20px; }
+.banner .tag { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 12px; font-size: 12px; }
+.banner-box { background: rgba(255,255,255,0.15); padding: 10px 15px; border-radius: 10px; text-align: center; min-width: 150px; }
+
+/* ===== ROLE TAGS ===== */
+.role-tags { margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
+.role-tags span { background: #e0e0e0; padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+.role-tags span:hover { background: #2196f3; color: #fff; }
+
+/* ===== CARDS ===== */
+.cards-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+.career-card { background: #fff; border-radius: 12px; overflow: hidden; width: 220px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; }
+.career-card img { width: 100%; height: 140px; object-fit: cover; }
+.career-card h4 { font-size: 16px; padding: 10px; }
+.career-card p { padding: 0 10px 10px; font-size: 14px; color: #555; }
+.career-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+
+/* ===== JOB TABLE ===== */
+table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+th, td { padding: 12px 15px; text-align: left; }
+th { background: #2196f3; color: #fff; }
+tr:nth-child(even) { background: #f2f2f2; }
+
+/* ===== RESPONSIVE ===== */
+@media(max-width: 1024px){ .dashboard-layout { flex-direction: column; } .sidebar { width: 100%; } }
+@media(max-width:600px){ .cards-grid { justify-content: center; } }
+</style>
 </head>
 
 <body>
 
-<!-- ===== TOP NAVBAR ===== -->
 <header class="dash-header">
   <div class="dash-left">
     <h2 class="logo">JobPortal</h2>
@@ -22,7 +86,6 @@
       <a href="#">Opportunities</a>
     </nav>
   </div>
-
   <div class="dash-right">
     <div class="search-bar">
       <input type="text" placeholder="Search jobs here">
@@ -33,29 +96,21 @@
   </div>
 </header>
 
-<!-- ===== MAIN LAYOUT ===== -->
 <div class="dashboard-layout">
 
-  <!-- ===== SIDEBAR ===== -->
   <aside class="sidebar">
     <div class="profile-card">
       <div class="avatar-circle">SR</div>
       <h3>Sree Raj</h3>
       <p>B.Tech CSE</p>
       <p class="small">RGUKT Andhra Pradesh</p>
-
-      <div class="progress-ring">
-        <span>32%</span>
-      </div>
-
+      <div class="progress-ring"><span>32%</span></div>
       <button class="btn-primary">Complete Profile</button>
     </div>
   </aside>
 
-  <!-- ===== MAIN CONTENT ===== -->
   <main class="dash-content">
 
-    <!-- Banner -->
     <section class="banner">
       <div>
         <span class="tag">Govt Exam</span>
@@ -70,11 +125,9 @@
       </div>
     </section>
 
-    <!-- Pathfinder -->
     <section class="section">
       <div class="section-head">
         <h3>Discover the career path that’s right for you</h3>
-        <a href="#">View all</a>
       </div>
 
       <div class="role-tags">
@@ -85,37 +138,119 @@
         <span>GCC</span>
       </div>
 
-      <div class="cards-grid">
-        <div class="career-card">
-          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475">
-          <h4>Software Development Engineer</h4>
-          <p>Avg. salary 6.2L</p>
-        </div>
+      <div class="cards-grid" id="cardsGrid"></div>
 
-        <div class="career-card">
-          <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d">
-          <h4>Product Implementation Engineer</h4>
-          <p>Avg. salary 4.5L</p>
-        </div>
-      </div>
+      <button id="gotoJobs">Go to Jobs</button>
     </section>
 
+    <table id="jobsTable">
+      <tr>
+        <th>Job</th>
+        <th>Company</th>
+        <th>Salary</th>
+      </tr>
+    </table>
+
   </main>
+
 </div>
-<table>
-  <tr>
-    <th>Job</th>
-    <th>Company</th>
-  </tr>
-  <tr>
-    <td>Software Development Engineer</td>
-    <td>TechCorp</td>
-  </tr>
-  <tr>
-    <td>Product Implementation Engineer</td>
-    <td>Innovate Inc.</td>
-  </tr>
-  
-</table>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  let loggedInUser = localStorage.getItem('loggedInUser');
+  const profileName = document.querySelector('.profile-card h3');
+  const dashRight = document.querySelector('.dash-right');
+  const searchInput = document.querySelector('.search-bar input');
+  const careerGrid = document.getElementById('cardsGrid');
+  const bannerBtn = document.querySelector('.banner button');
+  const completeProfileBtn = document.querySelector('.btn-primary');
+  const gotoJobsBtn = document.getElementById('gotoJobs');
+  const jobsTable = document.getElementById('jobsTable');
+
+  const user = {
+    name: loggedInUser || "Guest",
+    degree: "B.Tech CSE",
+    college: "RGUKT Andhra Pradesh",
+    progress: 32,
+    completeProfile: function() {
+      alert(this.name + ", please complete your profile!");
+      window.location.href = "profile.html";
+    }
+  };
+
+  const jobs = [
+    { title: "Software Development Engineer", company: "TechCorp", salary: "6.2L", img: "https://images.unsplash.com/photo-1518770660439-4636190af475" },
+    { title: "Product Implementation Engineer", company: "Innovate Inc.", salary: "4.5L", img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d" },
+    { title: "Data Analyst", company: "DataWorks", salary: "5.0L", img: "https://images.unsplash.com/photo-1553877522-43269d4ea984" },
+    { title: "Frontend Developer", company: "Webify", salary: "4.8L", img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f" }
+  ];
+
+  function checkLogin() {
+    if (!loggedInUser) { alert("Please login first!"); window.location.href = "login.html"; } 
+    else { profileName.textContent = user.name; }
+  }
+
+  function addLogoutButton() {
+    const logoutBtn = document.createElement('button');
+    logoutBtn.textContent = "Logout";
+    logoutBtn.classList.add('btn-logout');
+    logoutBtn.style.marginLeft = "10px";
+    dashRight.appendChild(logoutBtn);
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      alert("You have been logged out!");
+      window.location.href = "login.html";
+    });
+  }
+
+  function generateJobCards() {
+    careerGrid.innerHTML = "";
+    jobs.forEach(job => {
+      const card = document.createElement('div');
+      card.classList.add('career-card');
+      card.innerHTML = `<img src="${job.img}"><h4>${job.title}</h4><p>Avg. Salary: ${job.salary}</p>`;
+      card.addEventListener('mouseenter', () => { card.style.transform = "scale(1.05)"; card.style.boxShadow = "0 10px 20px rgba(0,0,0,0.2)"; });
+      card.addEventListener('mouseleave', () => { card.style.transform = "scale(1)"; card.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)"; });
+      card.addEventListener('click', () => alert("You clicked on " + job.title));
+      careerGrid.appendChild(card);
+    });
+  }
+
+  function generateJobTable() {
+    jobs.forEach(job => {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${job.title}</td><td>${job.company}</td><td>${job.salary}</td>`;
+      jobsTable.appendChild(row);
+    });
+  }
+
+  function searchJobs(event) {
+    const filter = event.target.value.toLowerCase();
+    Array.from(careerGrid.children).forEach(card => {
+      const text = card.querySelector('h4').textContent.toLowerCase();
+      card.style.display = text.includes(filter) ? "" : "none";
+    });
+    Array.from(jobsTable.rows).forEach((row, index) => {
+      if (index === 0) return;
+      const text = row.cells[0].textContent.toLowerCase();
+      row.style.display = text.includes(filter) ? "" : "none";
+    });
+  }
+
+  bannerBtn.addEventListener('mouseenter', () => { bannerBtn.style.backgroundColor = "#4caf50"; bannerBtn.style.transform = "scale(1.05)"; });
+  bannerBtn.addEventListener('mouseleave', () => { bannerBtn.style.backgroundColor = "#ff9800"; bannerBtn.style.transform = "scale(1)"; });
+  bannerBtn.addEventListener('click', () => alert("You have registered for the event!"));
+
+  completeProfileBtn.addEventListener('click', () => user.completeProfile());
+  searchInput.addEventListener('input', searchJobs);
+  gotoJobsBtn.addEventListener('click', () => window.location.href = "jobs.html");
+
+  checkLogin();
+  addLogoutButton();
+  generateJobCards();
+  generateJobTable();
+});
+</script>
+
 </body>
 </html>
