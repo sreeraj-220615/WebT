@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script> 
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <h2>JobPortal</h2>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="jobs.html">Jobs</a>
+    <a class="active" href="#">Resume</a>
+  </aside>
+
+  <main>
+
+    <div class="topbar">
+      <h2>Resume Management</h2>
+      <div class="avatar">SR</div>
+    </div>
+
+    <div class="resume-grid">
+
+      <!-- Upload Section -->
+      <div class="panel">
+        <h3>Upload Resume</h3>
+
+        <label class="upload-box">
+          <input type="file">
+          <span>📄 Choose Resume (PDF/DOC)</span>
+        </label>
+
+        <div class="progress">
+          <span style="width:75%"></span>
+        </div>
+
+        <p class="success-msg">Resume uploaded successfully ✔</p>
+      </div>
+
+      <!-- Preview Section -->
+      <div class="panel">
+        <h3>Current Resume</h3>
+        <div class="resume-preview">
+          <p><strong>File:</strong> SreeRaj_Resume.pdf</p>
+          <p><strong>Last Updated:</strong> 2 days ago</p>
+          <button>Download</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
