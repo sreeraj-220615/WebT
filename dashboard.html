@@ -20,7 +20,7 @@ body { background: #f4f6f8; color: #333; }
 .dash-right { display: flex; align-items: center; gap: 15px; }
 .search-bar { position: relative; }
 .search-bar input { padding: 6px 30px 6px 10px; border-radius: 20px; border: 1px solid #ccc; outline: none; }
-.search-bar span { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.search-bar span { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; cursor: pointer; }
 
 /* ===== LAYOUT ===== */
 .dashboard-layout { display: flex; padding: 20px 30px; gap: 20px; }
@@ -35,7 +35,7 @@ body { background: #f4f6f8; color: #333; }
 .progress-ring { margin: 15px 0; font-size: 14px; color: #555; }
 
 /* ===== BUTTONS ===== */
-.btn-primary, .btn-logout, .banner button, #gotoJobs { padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; transition: all 0.2s ease; }
+.btn-primary, .btn-logout, .banner button, #gotoJobs, .popup-btn { padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; transition: all 0.2s ease; }
 .btn-primary { background: #2196f3; color: #fff; width: 100%; }
 .btn-primary:hover { background: #1976d2; }
 .btn-logout { background: #f44336; color: #fff; }
@@ -44,6 +44,8 @@ body { background: #f4f6f8; color: #333; }
 .banner button:hover { background: #fb8c00; }
 #gotoJobs { background: #4caf50; color: #fff; margin-top: 20px; }
 #gotoJobs:hover { background: #388e3c; }
+.popup-btn { background: #673ab7; color: #fff; margin-top: 10px; width: 100%; }
+.popup-btn:hover { background: #512da8; }
 
 /* ===== BANNER ===== */
 .banner { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(90deg, #2196f3, #4caf50); color: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; flex-wrap: wrap; gap: 20px; }
@@ -106,6 +108,7 @@ tr:nth-child(even) { background: #f2f2f2; }
       <p class="small">RGUKT Andhra Pradesh</p>
       <div class="progress-ring"><span>32%</span></div>
       <button class="btn-primary">Complete Profile</button>
+      <button class="popup-btn">Say Hello!</button>
     </div>
   </aside>
 
@@ -166,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const completeProfileBtn = document.querySelector('.btn-primary');
   const gotoJobsBtn = document.getElementById('gotoJobs');
   const jobsTable = document.getElementById('jobsTable');
+  const popupBtn = document.querySelector('.popup-btn');
 
   const user = {
     name: loggedInUser || "Guest",
@@ -186,8 +190,12 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   function checkLogin() {
-    if (!loggedInUser) { alert("Please login first!"); window.location.href = "login.html"; } 
-    else { profileName.textContent = user.name; }
+    if (!loggedInUser) { 
+      alert("Please login first!"); 
+      window.location.href = "login.html"; 
+    } else { 
+      profileName.textContent = user.name; 
+    }
   }
 
   function addLogoutButton() {
@@ -244,6 +252,16 @@ document.addEventListener("DOMContentLoaded", () => {
   completeProfileBtn.addEventListener('click', () => user.completeProfile());
   searchInput.addEventListener('input', searchJobs);
   gotoJobsBtn.addEventListener('click', () => window.location.href = "jobs.html");
+
+  // === POPUP HELLO INTERACTION ===
+  popupBtn.addEventListener('click', () => {
+    let name = prompt("Enter your name to say hello:");
+    if (name && name.trim() !== "") {
+      alert("Hello, " + name + "! Welcome to your dashboard.");
+    } else {
+      alert("Hello! You didn't enter your name, but welcome anyway.");
+    }
+  });
 
   checkLogin();
   addLogoutButton();
