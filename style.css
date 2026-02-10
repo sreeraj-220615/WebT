@@ -896,3 +896,51 @@ body {
     width: 90%;
   }
 }
+body {
+    background:#121212;
+    color:white;
+    font-family:Arial;
+}
+
+.container {
+    width:80%;
+    margin:auto;
+    text-align:center;
+}
+
+table {
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th, td {
+    border:1px solid #444;
+    padding:10px;
+}
+
+button {
+    padding:8px 15px;
+    background:#00bcd4;
+    border:none;
+    color:white;
+    cursor:pointer;
+}
+
+input {
+    padding:8px;
+    margin:10px;
+}
+
+#progressBar {
+    width:100%;
+    background:#333;
+    height:10px;
+    margin-top:10px;
+}
+
+#progress {
+    width:0%;
+    height:100%;
+    background:#00ff88;
+}

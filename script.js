@@ -16,3 +16,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+document.getElementById("uploadForm").onsubmit = function(e){
+    e.preventDefault();
+
+    let formData = new FormData(this);
+    let xhr = new XMLHttpRequest();
+
+    xhr.upload.onprogress = function(e){
+        let percent = (e.loaded/e.total)*100;
+        document.getElementById("progress").style.width = percent + "%";
+    };
+
+    xhr.onload = function(){
+        alert("Upload Successful");
+        location.reload();
+    };
+
+    xhr.open("POST","upload_ajax.php",true);
+    xhr.send(formData);
+};
+
+// Search Function
+document.getElementById("search").onkeyup = function(){
+    let value = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#fileTable tr");
+
+    rows.forEach((row,i)=>{
+        if(i===0) return;
+        row.style.display =
+            row.innerText.toLowerCase().includes(value) ? "" : "none";
+    });
+};
