@@ -1,5 +1,19 @@
 <?php
 session_start();
+$client_id = getenv('GOOGLE_CLIENT_ID');
+$redirect_uri = getenv('REDIRECT_URI');
+
+$auth_url = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
+    'client_id' => $client_id,
+    'redirect_uri' => $redirect_uri,
+    'response_type' => 'code',
+    'scope' => 'email profile',
+    'access_type' => 'online',
+]);
+
+header("Location: $auth_url");
+exit();
+
 
 // Database connection
 $conn = mysqli_connect("localhost", "root", "#Jhanu@143", "testdb");

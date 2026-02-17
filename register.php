@@ -1,4 +1,5 @@
 <?php
+<a href="login.php">Login with Google</a>
 // Connect to database
 $conn = mysqli_connect("localhost", "root", "#Jhanu@143", "testdb");
 if (!$conn) {
